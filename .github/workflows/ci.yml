@@ -32,8 +32,8 @@ jobs:
       uses: sonarsource/sonarcloud-github-action@v2.3.0
       with:
         args: >
-          -Dsonar.projectKey=niasrb
-          -Dsonar.organization=Niasrb
+          -Dsonar.projectKey=n-i_github
+          -Dsonar.organization=n-i
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
