@@ -62,7 +62,7 @@ jobs:
     - name: Snyk Vulnerability Scan
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: C:\Users\HP\Desktop\snyk test --all-projects
+      run: C:\Users\HP\Desktop\snyk.exe test --all-projects
 
     - name: Deploy Application
       run: mvn deploy
