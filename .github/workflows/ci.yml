@@ -46,12 +46,11 @@ jobs:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-    - name: Install Maven Wrapper
-      run: chmod +x ./mvnw
-
+    # Ajouter Snyk CLI
     - name: Install Snyk CLI
       run: npm install -g snyk
 
+    # Exécuter les tests Snyk
     - name: Run Snyk test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
