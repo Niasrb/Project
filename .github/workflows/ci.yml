@@ -47,8 +47,8 @@ jobs:
 
 
     - name: Snyk Security Scan
-      uses: snyk/actions@b98d498629f1c368650224d6d212bf7dfa89e4bf
+      uses: snyk/actions@latest
       with:
-        args: test --all-projects
+       args: test --all-projects --debug
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
