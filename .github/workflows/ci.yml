@@ -41,6 +41,14 @@ jobs:
       env:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+
+
+    - name: Snyk Security Scan
+      uses: snyk/actions@0.4.0
+      with:
+        args: test --all-projects
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     #- name: Install Snyk CLI
     #  run: |
 #        curl -o- https://static.snyk.io/cli/latest/snyk-linux.tar.gz | tar xz -C /usr/local/bin snyk
