@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -62,7 +62,7 @@ jobs:
     - name: Snyk Vulnerability Scan
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: .\snyk.exe test --all-projects
+      run: C:\Users\HP\Desktop\snyk test --all-projects
 
     - name: Deploy Application
       run: mvn deploy
