@@ -47,8 +47,8 @@ jobs:
 
 
     - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
-        env:
+      uses: snyk/actions/maven@master
+      env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Deploy Application
