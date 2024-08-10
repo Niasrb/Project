@@ -33,9 +33,14 @@ jobs:
       run: mvn test
 
     - name: Snyk Security Scan
-      uses: snyk/actions/cli@v3.1.0
+      uses: snyk/actions/setup@v2
       with:
-        args: test
+        version: '1.1094.0'  # Utilisation de la version stable de Snyk CLI
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+    - name: Snyk Test
+      run: snyk test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
