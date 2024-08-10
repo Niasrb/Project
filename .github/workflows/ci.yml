@@ -57,7 +57,7 @@ jobs:
 
     - name: Install Snyk CLI
       run: |
-        curl -o- https://static.snyk.io/cli/latest/snyk-linux.tar.gz | tar xz -C C:\Users\HP\Desktop snyk
+         curl https://static.snyk.io/cli/latest/snyk-win.exe -o snyk.exe .\snyk.exe --version
 
     - name: Snyk Vulnerability Scan
       env:
