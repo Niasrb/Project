@@ -47,35 +47,17 @@ jobs:
 
 
  
-   
-   # - name: Run Snyk to check for vulnerabilities in debug mode
-    #  uses: snyk/actions/maven@master
-     # with:
-      # args: test --all-projects -d
-      #env:
-       #SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - name: Install Snyk CLI
+      run: npm install -g snyk
 
- #   - name: Install Snyk CLI
-  #    run: |
-   #      curl https://static.snyk.io/cli/latest/snyk-win.exe -o snyk.exe .\snyk.exe --version
+    - name: Authenticate Snyk
+      run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-    #- name: Snyk Vulnerability Scan
-     # env:
-      #  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      #run: C:\Users\HP\Desktop\snyk.exe test --all-projects
+    - name: Snyk Test
+      run: snyk test --all-projects
 
-
-
-
-    - name: Run Snyk to check for vulnerabilities
-      shell: cmd
-      run: |
-         cd C:\Users\HP\Desktop
-         snyk test --all-projects
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-
+    - name: Snyk Monitor
+      run: snyk monitor --all-projects
 
     - name: Deploy Application
       run: mvn deploy
