@@ -25,22 +25,25 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    - name: Give execute permission to mvnw
+      run: chmod +x mvnw
         
     - name: Build with Maven
-      run: mvn clean install
+      run: ./mvnw clean install
 
     - name: Run tests
-      run: mvn test
+      run: ./mvnw test
 
     - name: Snyk Security Scan
       uses: snyk/actions/setup@0.4.0
       with:
-        version: '1.1094.0'  # Utilisation de la version stable de Snyk CLI
+        version: '1.1094.0'
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Snyk Test
-      run: snyk test
+      run: snyk test --file=pom.xml
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
