@@ -46,21 +46,10 @@ jobs:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-    # Ajouter Snyk CLI
-    - name: Install Snyk CLI
-      run: npm install -g snyk
-
-    - name: List files and directories
-      run: |
-        ls -al
-        pwd
-
-    # Exécuter les tests Snyk
-    - name: Run Snyk test in debug mode
-      env:
-       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: snyk test -d
-
+    - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Deploy Application
       run: mvn deploy
