@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Check JAVA_HOME
+      run: echo $JAVA_HOME
+        
     - name: Checkout code
       uses: actions/checkout@v4.1.7
 
