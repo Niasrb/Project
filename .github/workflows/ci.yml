@@ -53,6 +53,10 @@ jobs:
     - name: Authenticate Snyk
       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
+
+    - name: Grant execute permissions for Maven Wrapper
+      run: chmod +x ./mvnw
+
     - name: Snyk Test
       run: snyk test --file=pom.xml
 
