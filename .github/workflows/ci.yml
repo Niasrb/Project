@@ -55,14 +55,29 @@ jobs:
       #env:
        #SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-    - name: Install Snyk CLI
-      run: |
-         curl https://static.snyk.io/cli/latest/snyk-win.exe -o snyk.exe .\snyk.exe --version
+ #   - name: Install Snyk CLI
+  #    run: |
+   #      curl https://static.snyk.io/cli/latest/snyk-win.exe -o snyk.exe .\snyk.exe --version
 
-    - name: Snyk Vulnerability Scan
+    #- name: Snyk Vulnerability Scan
+     # env:
+      #  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #run: C:\Users\HP\Desktop\snyk.exe test --all-projects
+
+
+    - name: Install Snyk CLI
+      shell: cmd
+      run: |
+        curl https://static.snyk.io/cli/latest/snyk-win.exe -o snyk.exe
+        snyk.exe --version
+
+    - name: Run Snyk to check for vulnerabilities
+      shell: cmd
+      run: snyk.exe test --all-projects
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: C:\Users\HP\Desktop\snyk.exe test --all-projects
+
+
 
     - name: Deploy Application
       run: mvn deploy
