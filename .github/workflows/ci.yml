@@ -46,13 +46,9 @@ jobs:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-    - name: Run Snyk Maven scan
-      uses: snyk/actions/maven-3-jdk-17@master
-      with:
-          command: test
-          json: false
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/maven@master
       env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.12-7/x64
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Deploy Application
