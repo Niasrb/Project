@@ -53,11 +53,11 @@ jobs:
     - name: Authenticate Snyk
       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-   # - name: Snyk Test
-    #  run: snyk test --all-projects
+    - name: Snyk Test
+      run: snyk test --file=pom.xml
 
-    - name: Snyk Test (Debug)
-      run: DEBUG=*snyk* snyk test --all-projects
+   # - name: Snyk Test (Debug)
+    #  run: DEBUG=*snyk* snyk test --all-projects
 
 
     - name: Snyk Monitor
