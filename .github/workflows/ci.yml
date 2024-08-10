@@ -51,10 +51,11 @@ jobs:
       run: npm install -g snyk
 
     # Exécuter les tests Snyk
-    - name: Run Snyk test
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: snyk test
+    - name: Run Snyk test in debug mode
+  env:
+    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  run: snyk test -d
+
 
     - name: Deploy Application
       run: mvn deploy
