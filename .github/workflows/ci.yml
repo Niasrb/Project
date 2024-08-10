@@ -48,21 +48,21 @@ jobs:
 
  
    
-    - name: Run Snyk to check for vulnerabilities in debug mode
-      uses: snyk/actions/maven@master
-      with:
-       args: test --all-projects -d
+   # - name: Run Snyk to check for vulnerabilities in debug mode
+    #  uses: snyk/actions/maven@master
+     # with:
+      # args: test --all-projects -d
+      #env:
+       #SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+    - name: Install Snyk CLI
+      run: |
+        curl -o- https://static.snyk.io/cli/latest/snyk-linux.tar.gz | tar xz -C C:\Users\HP\Desktop snyk
+
+    - name: Snyk Vulnerability Scan
       env:
-       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      run: snyk test --all-projects
 
-    #- name: Install Snyk CLI
-    #  run: |
-#        curl -o- https://static.snyk.io/cli/latest/snyk-linux.tar.gz | tar xz -C /usr/local/bin snyk
-
- #   - name: Snyk Vulnerability Scan
-   #   env:
-    #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-     # run: snyk test --all-projects
-
-   # - name: Deploy Application
-    #  run: mvn deploy
+    - name: Deploy Application
+      run: mvn deploy
