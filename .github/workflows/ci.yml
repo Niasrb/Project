@@ -35,7 +35,7 @@ jobs:
           -Dsonar.projectKey=n-i_github
           -Dsonar.organization=n-i
           -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
           -Dsonar.java.binaries=target/classes
           -X
       env:
