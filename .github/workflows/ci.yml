@@ -32,6 +32,13 @@ jobs:
     - name: Run tests
       run: mvn test
 
+    - name: Snyk Security Scan
+      uses: snyk/actions/cli@v3.1.0
+      with:
+        args: test
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v2.3.0
       with:
@@ -44,28 +51,3 @@ jobs:
           -X
       env:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
- 
-    - name: Install Snyk CLI
-      run: npm install -g snyk
-
-    - name: Authenticate Snyk
-      run: snyk auth ${{ secrets.SNYK_TOKEN }}
-
-
-    - name: Grant execute permissions for Maven Wrapper
-      run: chmod +x ./mvnw
-
-    - name: Snyk Test
-      run: snyk test --file=pom.xml
-
-   # - name: Snyk Test (Debug)
-    #  run: DEBUG=*snyk* snyk test --all-projects
-
-
-    - name: Snyk Monitor
-      run: snyk monitor --all-projects
-
-    - name: Deploy Application
-      run: mvn deploy
