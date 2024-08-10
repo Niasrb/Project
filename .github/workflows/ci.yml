@@ -50,6 +50,9 @@ jobs:
     - name: Install Snyk CLI
       run: npm install -g snyk
 
+    - name: Change directory to project root
+      run: cd C:\Users\HP\Documents\GitHub\Project
+
     # Exécuter les tests Snyk
     - name: Run Snyk test in debug mode
       env:
