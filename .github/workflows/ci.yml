@@ -46,5 +46,13 @@ jobs:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
+    - name: Install Snyk CLI
+      run: npm install -g snyk
+
+    - name: Run Snyk test
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      run: snyk test
+
     - name: Deploy Application
       run: mvn deploy
