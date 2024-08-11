@@ -49,4 +49,12 @@ jobs:
     - name: Snyk Security Scan
       run: |
         docker pull snyk/snyk:maven-3-jdk-17
-        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects
+        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects  --json-file-output=snyk-results.json
+
+
+    - name: Publish Snyk results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: snyk-results
+        path: snyk-results.json
