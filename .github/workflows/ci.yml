@@ -44,7 +44,7 @@ jobs:
     - name: Snyk Security Scan
       run: |
         docker pull snyk/snyk:maven-3-jdk-17
-        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects --json > snyk-results.json
+        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 sh -c "snyk test --all-projects --json > snyk-results.json"
 
     - name: List files
       run: ls -la
