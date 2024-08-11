@@ -48,5 +48,5 @@ jobs:
 
     - name: Snyk Security Scan
       run: |
-        docker pull snyk/snyk-cli:latest
-        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk-cli:latest test --all-projects
+        docker pull snyk/snyk:maven-3-jdk-17
+        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects
