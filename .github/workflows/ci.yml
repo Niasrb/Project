@@ -13,10 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: Check JAVA_HOME
-      run: echo $JAVA_HOME
-        
     - name: Checkout code
       uses: actions/checkout@v4.1.7
 
@@ -45,15 +41,15 @@ jobs:
       env:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-
     - name: Snyk Security Scan
       run: |
         docker pull snyk/snyk:maven-3-jdk-17
-        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects  --json-file-output=snyk-results.json
+        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects --json > snyk-results.json
 
+    - name: List files
+      run: ls -la
 
-    - name: Publish Snyk results
-      if: always()
+    - name: Upload Snyk results
       uses: actions/upload-artifact@v3
       with:
         name: snyk-results
