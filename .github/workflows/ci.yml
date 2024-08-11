@@ -46,3 +46,9 @@ jobs:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
+    - name: Set up Docker
+      run: |
+        docker pull snyk/snyk-cli
+        docker run -v $(pwd):/project snyk/snyk-cli test --org=60010d4c-52e2-4831-beb5-ae127cd1af0d
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
