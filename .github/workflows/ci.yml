@@ -49,4 +49,5 @@ jobs:
     - name: Snyk Security Scan
       run: |
        docker pull snyk/snyk:maven-3-jdk-17
-       docker run -e SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} -v $(pwd):/project snyk/snyk:maven-3-jdk-17 test --org=60010d4c-52e2-4831-beb5-ae127cd1af0d --file=/project/pom.xml
+       docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --org=60010d4c-52e2-4831-beb5-ae127cd1af0d --file=/project/pom.xml
+
