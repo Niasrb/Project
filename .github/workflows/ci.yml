@@ -22,11 +22,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Install Maven
+      uses: actions/setup-java@v4.2.2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y maven
+
     - name: Install Snyk CLI
       run: npm install -g snyk
-
-    - name: Give execution permission to mvnw
-      run: chmod +x ./mvnw
 
     - name: Snyk Security Scan (pre-build)
       run: snyk test --file=pom.xml --json-file-output=snyk-pre-build-results.json
@@ -34,7 +40,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Build with Maven
-      run: ./mvnw clean install
+      run: mvn clean install
 
     - name: Snyk Security Scan (post-build)
       run: snyk test --all-projects --json-file-output=snyk-post-build-results.json
@@ -42,7 +48,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Run tests
-      run: ./mvnw test
+      run: mvn test
 
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v2.3.0
@@ -78,4 +84,4 @@ jobs:
         path: target/surefire-reports/
 
     - name: Clean up
-      run: ./mvnw clean
+      run: mvn clean
