@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Check JAVA_HOME
+      run: echo $JAVA_HOME
+        
     - name: Checkout code
       uses: actions/checkout@v4.1.7
 
@@ -21,27 +25,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: Install Maven
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y maven
-
-    - name: Install Snyk CLI
-      run: npm install -g snyk
-
-    - name: Snyk Security Scan (pre-build)
-      run: snyk test --file=pom.xml --json-file-output=snyk-pre-build-results.json
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
+        
     - name: Build with Maven
       run: mvn clean install
-
-    - name: Snyk Security Scan (post-build)
-      run: snyk test --all-projects --json-file-output=snyk-post-build-results.json
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Run tests
       run: mvn test
@@ -50,34 +36,17 @@ jobs:
       uses: sonarsource/sonarcloud-github-action@v2.3.0
       with:
         args: >
-          -Dsonar.projectKey=votre_projet
-          -Dsonar.organization=votre_organisation
+          -Dsonar.projectKey=n-i_github
+          -Dsonar.organization=n-i
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
           -Dsonar.java.binaries=target/classes
+          -X
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    - name: Publish Snyk pre-build scan results
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: snyk-pre-build-results
-        path: snyk-pre-build-results.json
 
-    - name: Publish Snyk post-build scan results
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: snyk-post-build-results
-        path: snyk-post-build-results.json
-
-    - name: Publish test results
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-results
-        path: target/surefire-reports/
-
-    - name: Clean up
-      run: mvn clean
+    - name: Snyk Security Scan
+      run: |
+        docker pull snyk/snyk:maven-3-jdk-17
+        docker run -e SNYK_TOKEN="${{ secrets.SNYK_TOKEN }}" -v "$(pwd):/project" snyk/snyk:maven-3-jdk-17 test --all-projects
