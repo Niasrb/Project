@@ -25,13 +25,16 @@ jobs:
     - name: Install Snyk CLI
       run: npm install -g snyk
 
+    - name: Give execution permission to mvnw
+      run: chmod +x ./mvnw
+
     - name: Snyk Security Scan (pre-build)
       run: snyk test --file=pom.xml --json-file-output=snyk-pre-build-results.json
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Build with Maven
-      run: mvn clean install
+      run: ./mvnw clean install
 
     - name: Snyk Security Scan (post-build)
       run: snyk test --all-projects --json-file-output=snyk-post-build-results.json
@@ -39,7 +42,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Run tests
-      run: mvn test
+      run: ./mvnw test
 
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v2.3.0
@@ -75,4 +78,4 @@ jobs:
         path: target/surefire-reports/
 
     - name: Clean up
-      run: mvn clean
+      run: ./mvnw clean
